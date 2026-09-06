@@ -2,6 +2,8 @@
 
 A responsive personal portfolio app built with Flutter for a UI internal exam.
 
+**Live: https://bitmvk.github.io/portfolio/**
+
 ## Pages & navigation
 
 - **Home** – avatar, short introduction
