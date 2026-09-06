@@ -109,7 +109,6 @@ class ProjectsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(title: const Text('My Projects')),
       body: PageFrame(
         child: Column(

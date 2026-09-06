@@ -5,15 +5,11 @@ import 'package:flutter/material.dart';
 /// Accent color for buttons and highlights.
 const accentColor = Color(0xFF8B5CF6);
 
-/// Page background: dark indigo -> violet gradient.
-const pageGradient = LinearGradient(
-  begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,
-  colors: [Color(0xFF1E1B4B), Color(0xFF312E81), Color(0xFF4C1D95)],
-);
+/// Page background color (solid, set in the theme too).
+const bgColor = Color(0xFF1E1B4B);
 
-/// Gradient background that keeps content centered and readable on any
-/// screen size (the responsive part of the app).
+/// Centers content, constrains its width and lets it scroll on small
+/// screens (the responsive part of the app).
 class PageFrame extends StatelessWidget {
   const PageFrame({super.key, required this.child});
 
@@ -21,15 +17,12 @@ class PageFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(gradient: pageGradient),
-      child: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 100, 24, 32),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: child,
-          ),
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: child,
         ),
       ),
     );

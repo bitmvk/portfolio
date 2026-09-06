@@ -7,6 +7,10 @@ import 'widgets/page_frame.dart';
 
 void main() => runApp(const PortfolioApp());
 
+/// Lets us launch the app on a specific page (used for screenshots):
+/// flutter run --dart-define=PAGE=about
+const _page = String.fromEnvironment('PAGE', defaultValue: 'home');
+
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
 
@@ -18,9 +22,12 @@ class PortfolioApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFF1E1B4B),
-        colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: accentColor,
+          brightness: Brightness.dark,
+        ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color(0xFF1E1B4B),
           foregroundColor: Colors.white,
           elevation: 0,
           centerTitle: true,
@@ -55,7 +62,7 @@ class PortfolioApp extends StatelessWidget {
           ),
         ),
         chipTheme: ChipThemeData(
-          backgroundColor: Colors.white10,
+          backgroundColor: const Color(0xFF453F7A),
           side: const BorderSide(color: Colors.white24),
           labelStyle: const TextStyle(color: Colors.white, fontSize: 13),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -67,7 +74,13 @@ class PortfolioApp extends StatelessWidget {
         '/about': (_) => const AboutPage(),
         '/projects': (_) => const ProjectsPage(),
       },
-      home: const HomePage(),
+      home: _initialPage(),
     );
   }
 }
+
+Widget _initialPage() => switch (_page) {
+      'about' => const AboutPage(),
+      'projects' => const ProjectsPage(),
+      _ => const HomePage(),
+    };

@@ -11,7 +11,6 @@ class HomePage extends StatelessWidget {
     final muted = TextStyle(fontSize: 16, height: 1.5, color: Colors.white70);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(title: const Text('My Portfolio')),
       body: PageFrame(
         child: Column(

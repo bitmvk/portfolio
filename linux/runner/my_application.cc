@@ -5,6 +5,8 @@
 #include <gdk/gdkx.h>
 #endif
 
+#include <stdlib.h>
+
 #include "flutter/generated_plugin_registrant.h"
 
 struct _MyApplication {
@@ -52,7 +54,14 @@ static void my_application_activate(GApplication* application) {
     gtk_window_set_title(window, "portfolio");
   }
 
-  gtk_window_set_default_size(window, 1280, 720);
+  // Size can be overridden with PORTFOLIO_W/PORTFOLIO_H so phone-sized
+  // layouts can be tested on desktop.
+  int win_w = 1280, win_h = 720;
+  const char* env_w = getenv("PORTFOLIO_W");
+  const char* env_h = getenv("PORTFOLIO_H");
+  if (env_w) win_w = atoi(env_w);
+  if (env_h) win_h = atoi(env_h);
+  gtk_window_set_default_size(window, win_w, win_h);
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(
