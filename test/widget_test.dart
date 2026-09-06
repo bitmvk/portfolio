@@ -3,22 +3,32 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:portfolio/main.dart';
 
 void main() {
-  testWidgets('navigates between all three pages', (tester) async {
+  testWidgets('navigates between all three pages with buttons', (tester) async {
     await tester.pumpWidget(const PortfolioApp());
 
     // Home page shows the introduction.
     expect(find.text("Hi, I'm Vivek"), findsOneWidget);
 
-    // Go to About.
-    await tester.tap(find.text('About'));
+    // Button to About (scroll it into view first — it's below the fold).
+    await tester.ensureVisible(find.text('About Me'));
     await tester.pumpAndSettle();
-    expect(find.text('About Me'), findsOneWidget);
+    await tester.tap(find.text('About Me'));
+    await tester.pumpAndSettle();
+    expect(find.text('Frameworks & Tools'), findsOneWidget);
     expect(find.text('Python'), findsWidgets);
 
-    // Go to Projects.
+    // Button to Projects.
+    await tester.ensureVisible(find.text('Projects'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Projects'));
     await tester.pumpAndSettle();
-    expect(find.text('My Projects'), findsOneWidget);
     expect(find.text('Personal Finance Management App'), findsOneWidget);
+
+    // Home button pops back to the first page.
+    await tester.ensureVisible(find.text('Home'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Home'));
+    await tester.pumpAndSettle();
+    expect(find.text("Hi, I'm Vivek"), findsOneWidget);
   });
 }

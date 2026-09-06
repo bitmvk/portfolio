@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'pages/about_page.dart';
 import 'pages/home_page.dart';
 import 'pages/projects_page.dart';
+import 'widgets/page_frame.dart';
 
-void main() {
-  runApp(const PortfolioApp());
-}
+void main() => runApp(const PortfolioApp());
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -15,82 +14,60 @@ class PortfolioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Portfolio',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         useMaterial3: true,
-      ),
-      home: const HomeShell(),
-    );
-  }
-}
-
-/// Scaffold with navigation between the three pages.
-/// Responsive: a side NavigationRail on wide screens, a bottom
-/// NavigationBar on narrow ones.
-class HomeShell extends StatefulWidget {
-  const HomeShell({super.key});
-
-  @override
-  State<HomeShell> createState() => _HomeShellState();
-}
-
-class _HomeShellState extends State<HomeShell> {
-  int _currentIndex = 0;
-
-  static const List<Widget> _pages = [
-    HomePage(),
-    AboutPage(),
-    ProjectsPage(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final isWide = MediaQuery.sizeOf(context).width >= 700;
-
-    return Scaffold(
-      appBar: AppBar(title: const Text('My Portfolio')),
-      body: isWide
-          ? Row(
-              children: [
-                NavigationRail(
-                  selectedIndex: _currentIndex,
-                  onDestinationSelected: (i) =>
-                      setState(() => _currentIndex = i),
-                  labelType: NavigationRailLabelType.all,
-                  destinations: const [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.person),
-                      label: Text('About'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.code),
-                      label: Text('Projects'),
-                    ),
-                  ],
-                ),
-                const VerticalDivider(width: 1),
-                Expanded(child: _pages[_currentIndex]),
-              ],
-            )
-          : _pages[_currentIndex],
-      bottomNavigationBar: isWide
-          ? null
-          : NavigationBar(
-              selectedIndex: _currentIndex,
-              onDestinationSelected: (i) => setState(() => _currentIndex = i),
-              destinations: const [
-                NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-                NavigationDestination(icon: Icon(Icons.person), label: 'About'),
-                NavigationDestination(
-                  icon: Icon(Icons.code),
-                  label: 'Projects',
-                ),
-              ],
+        scaffoldBackgroundColor: const Color(0xFF1E1B4B),
+        colorScheme: ColorScheme.fromSeed(seedColor: accentColor),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: accentColor,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            shape: const StadiumBorder(),
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: Colors.white,
+            side: const BorderSide(color: Colors.white54),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+            shape: const StadiumBorder(),
+            textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: Colors.white10,
+          side: const BorderSide(color: Colors.white24),
+          labelStyle: const TextStyle(color: Colors.white, fontSize: 13),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+      ),
+      // Navigation: a simple stack. Buttons push named routes; the AppBar
+      // shows a back arrow on every page except the home page.
+      routes: {
+        '/about': (_) => const AboutPage(),
+        '/projects': (_) => const ProjectsPage(),
+      },
+      home: const HomePage(),
     );
   }
 }

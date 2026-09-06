@@ -2,20 +2,27 @@
 
 A responsive personal portfolio app built with Flutter for a UI internal exam.
 
-## Pages
+## Pages & navigation
 
-- **Home** – avatar and short introduction
-- **About Me** – skills and areas of expertise
-- **My Projects** – project cards
+- **Home** – avatar, short introduction
+- **About Me** – skills, frameworks, areas of interest
+- **My Projects** – project cards with emoji icons and tech chips
+
+Navigation is a simple `Navigator` stack: buttons `pushNamed` to a page, and
+the AppBar shows a back arrow automatically. Every page has buttons to reach
+the other two pages.
+
+## Look
+
+- Indigo → violet gradient background, translucent rounded cards, accent
+  buttons (`StadiumBorder`), emojis instead of image assets.
+- All styling lives in `ThemeData` (main.dart) and `widgets/page_frame.dart`.
 
 ## Responsive design
 
-The app switches navigation based on screen width:
-
-- **Wide screens (≥ 700px)** – `NavigationRail` on the left side
-- **Narrow screens** – `NavigationBar` at the bottom
-
-Content is constrained to a max width so it stays readable on desktop/web.
+- Content is centered and constrained to `maxWidth: 600` — readable on any
+  screen size; everything scrolls vertically on small screens.
+- No fixed pixel layouts; buttons and cards stretch with the available width.
 
 ## Run
 
@@ -23,14 +30,3 @@ Content is constrained to a max width so it stays readable on desktop/web.
 flutter pub get
 flutter run
 ```
-
-## Skills
-
-Python, JavaScript, C · FastAPI, Flask, React, Flutter
-
-## Projects
-
-- Personal Finance Management App
-- Emotion Detection Neural Network
-- Python Framework for Android Apps
-- WYSIWYG Editor in PySide6
